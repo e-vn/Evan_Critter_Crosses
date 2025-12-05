@@ -46,6 +46,33 @@ bool Game::init()
     window.getSize().x / 2 - quit_option.getGlobalBounds().width / 2 + 200,
     window.getSize().y / 2 - quit_option.getGlobalBounds().height / 2 + 200);
 
+   //pause menu
+   
+  //pause title
+    pause_title.setString("Pause");
+    pause_title.setFont(font);
+    pause_title.setCharacterSize(100);
+    pause_title.setFillColor(sf::Color(255, 255, 255, 255));
+    pause_title.setPosition(
+    window.getSize().x / 2 - pause_title.getGlobalBounds().width / 2,
+    window.getSize().y / 2 - pause_title.getGlobalBounds().height / 2 - 150);
+    // play button
+    continue_option.setString("> Continue <");
+    continue_option.setFont(font);
+    continue_option.setCharacterSize(50);
+    continue_option.setFillColor(sf::Color(255, 255, 255, 128));
+    continue_option.setPosition(
+    window.getSize().x / 2 - continue_option.getGlobalBounds().width / 2 - 200,
+    window.getSize().y / 2 - continue_option.getGlobalBounds().height / 2 + 200);
+
+    // quit button
+    pause_quit_option.setString("Quit");
+    pause_quit_option.setFont(font);
+    pause_quit_option.setCharacterSize(50);
+    pause_quit_option.setFillColor(sf::Color(255, 255, 255, 128));
+    pause_quit_option.setPosition(
+    window.getSize().x / 2 - pause_quit_option.getGlobalBounds().width / 2 + 200,
+    window.getSize().y / 2 - pause_quit_option.getGlobalBounds().height / 2 + 200);
 
   return true;
 }
@@ -56,21 +83,36 @@ void Game::update(float dt)
     {
         // main menu state
     }
-
-
+    else if (game_state == "pause")
+    {
+        //pause state
+    }
+    else if (game_state == "in_game") 
+    {
+        //in game state
+    }
 }
 
 void Game::render()
 {
-    if (game_state == "main") 
+    if (game_state == "main")
     {
         window.draw(title_text);
         window.draw(play_option);
         window.draw(quit_option);
     }
-
+    else if (game_state == "pause")
+    {
+        window.draw(pause_title);
+        window.draw(continue_option);
+        window.draw(pause_quit_option);
+    }
+    else if (game_state == "in_game") 
+    {
+        window.draw(title_text);
+    }
 }
-
+ 
 void Game::mouseClicked(sf::Event event)
 {
   //get the click position
@@ -111,9 +153,56 @@ void Game::keyPressed(sf::Event event)
             }
         }
     }
+    else if (game_state == "in_game")
+    {
+        if (event.key.code == sf::Keyboard::Escape)
+        {
+            pauseGame();
+        }
+    }
+    else if (game_state == "pause")
+    {
+        if (
+            (event.key.code == sf::Keyboard::Left) ||
+            (event.key.code == sf::Keyboard::Right))
+        {
+            continue_selected = !continue_selected;
+            if (continue_selected)
+            {
+                continue_option.setString("> Continue <");
+                pause_quit_option.setString("Quit");
+            }
+            else
+            {
+                continue_option.setString("Continue");
+                pause_quit_option.setString("> Quit <");
+            }
+        }
+        else if (event.key.code == sf::Keyboard::Enter)
+        {
+            if (continue_selected)
+            {
+                game_state = "in_game";
+                is_paused = false;
+            }
+            else
+            {
+                game_state = "main";
+                //reset();
+            }
+        }
+    }
 }
+
+
 void Game::keyReleased(sf::Event event) {
 
+}
+
+void Game::pauseGame()
+{
+    is_paused = true;
+    game_state = "pause";
 }
 
 
