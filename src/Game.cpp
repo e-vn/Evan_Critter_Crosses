@@ -10,11 +10,23 @@ Game::Game(sf::RenderWindow& game_window)
 
 Game::~Game()
 {
-
+    delete[] animals;
+    delete[] passports;
+    delete character;
+    delete passport;
 }
 
 bool Game::init()
 {
+    // sprites
+    character = new sf::Sprite;
+    passport = new sf::Sprite;
+
+
+    fillAnimalArray();
+    fillPassportArray();
+
+
     //main menu title
     if (!font.loadFromFile("../Data/Fonts/OpenSans-Bold.ttf"))
     {
@@ -74,6 +86,7 @@ bool Game::init()
     window.getSize().x / 2 - pause_quit_option.getGlobalBounds().width / 2 + 200,
     window.getSize().y / 2 - pause_quit_option.getGlobalBounds().height / 2 + 200);
 
+
   return true;
 }
 
@@ -109,7 +122,9 @@ void Game::render()
     }
     else if (game_state == "in_game") 
     {
-        window.draw(title_text);
+        window.draw(*passport);
+        window.draw(*character);
+
     }
 }
  
@@ -145,6 +160,9 @@ void Game::keyPressed(sf::Event event)
         {
             if (play_selected)
             {
+                newAnimal();
+
+
                 game_state = "in_game";
             }
            else
@@ -204,5 +222,40 @@ void Game::pauseGame()
     is_paused = true;
     game_state = "pause";
 }
+
+void Game::newAnimal()
+{
+    passport_accepted = false;
+    passport_rejected = false;
+
+    int animal_index = rand() % 3;
+    int passport_index = rand() % 3;
+
+    if (animal_index == passport_index)
+    {
+        should_accept = true;
+    }
+    else
+    {
+        should_accept = false;
+    }
+
+    character->setTexture(animals[animal_index], true);
+    character->setScale(1.8, 1.8);
+    character->setPosition(window.getSize().x / 12, window.getSize().y / 12);
+
+
+    passport->setTexture(passports[passport_index], true);
+    passport->setScale(0.6, 0.6);
+    passport->setPosition(window.getSize().x / 2,  window.getSize().y / 3);
+
+}
+
+void Game::loadTextures() 
+{
+    //1- make path strings, 2- make for loop capped at array size, 3- make if chain set paths based on index in each, 4- within for loop load textures into array  
+}
+
+
 
 

@@ -16,7 +16,10 @@ class Game
   void keyPressed(sf::Event event);
   void keyReleased(sf::Event event);
   void pauseGame();
+  void newAnimal();
   void reset();
+  void loadTextures();
+
 
  private:
   sf::RenderWindow& window;
@@ -35,6 +38,14 @@ bool play_selected = true;
   sf::Text pause_quit_option;
   bool continue_selected = true;
 
+  sf::Sprite* character;
+  sf::Sprite* passport;
+  sf::Texture* animals = new sf::Texture[3];
+  sf::Texture* passports = new sf::Texture[3];
+
+  bool passport_accepted;
+  bool passport_rejected;
+  bool should_accept;
 
 
 };
