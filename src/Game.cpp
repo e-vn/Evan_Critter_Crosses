@@ -19,13 +19,10 @@ Game::~Game()
 bool Game::init()
 {
     // sprites
-    character = new sf::Sprite;
-    passport = new sf::Sprite;
-
-
-    fillAnimalArray();
-    fillPassportArray();
-
+    character = new sf::Sprite();
+    passport = new sf::Sprite();
+    loadTextures();
+ 
 
     //main menu title
     if (!font.loadFromFile("../Data/Fonts/OpenSans-Bold.ttf"))
@@ -253,40 +250,40 @@ void Game::newAnimal()
 
 void Game::loadTextures() 
 {
-    //1- make path strings, 2- make for loop capped at array size, 3- make if chain set paths based on index in each, 4- within for loop load textures into array  
+   
 
 
 //penguin
-if (!animals[0].loadFromFile("..Data\CritterCustoms\penguin.png"))
+if (!animals[0].loadFromFile("../Data/CritterCustoms/penguin.png"))
 {
     std::cout << "penguin texture did not load \n";
 }
 
-if (!passports[0].loadFromFile("..Data\CritterCustoms\penguin passport.png"))
+if (!passports[0].loadFromFile("../Data/CritterCustoms/penguin passport.png"))
 {
     std::cout << "penguin passport texture did not load \n";
 }
 
 
 //moose
-if (!animals[1].loadFromFile("..Data\CritterCustoms\moose.png"))
+if (!animals[1].loadFromFile("../Data/CritterCustoms/moose.png"))
 {
     std::cout << "moose texture did not load \n";
 }
 
-if (!passports[1].loadFromFile("..Data\CritterCustoms\moose passport.png"))
+if (!passports[1].loadFromFile("../Data/CritterCustoms/moose passport.png"))
 {
     std::cout << "moose passport texture did not load \n";
 }
 
 
 //elephant
-if (!animals[2].loadFromFile("..Data\CritterCustoms\elephant.png"))
+if (!animals[2].loadFromFile("../Data/CritterCustoms/elephant.png"))
 {
     std::cout << "elephant texture did not load \n";
 }
 
-if (!passports[2].loadFromFile("..Data\CritterCustoms\elephant passport.png"))
+if (!passports[2].loadFromFile("../Data/CritterCustoms/elephant passport.png"))
 {
     std::cout << "elephant passport texture did not load \n";
 }
