@@ -251,8 +251,6 @@ void Game::newAnimal()
 void Game::loadTextures() 
 {
    
-
-
 //penguin
 if (!animals[0].loadFromFile("../Data/CritterCustoms/penguin.png"))
 {
