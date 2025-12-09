@@ -43,6 +43,9 @@ bool play_selected = true;
   sf::Texture* animals = new sf::Texture[3];
   sf::Texture* passports = new sf::Texture[3];
 
+
+
+
   bool passport_accepted;
   bool passport_rejected;
   bool should_accept;
