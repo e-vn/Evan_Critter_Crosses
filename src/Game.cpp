@@ -21,6 +21,13 @@ bool Game::init()
     // sprites
     character = new sf::Sprite();
     passport = new sf::Sprite();
+
+    accept_button = new sf::Sprite();
+    reject_button = new sf::Sprite();
+
+    accepted = new sf::Texture();
+    rejected = new sf::Texture();
+
     loadTextures();
  
 
@@ -228,6 +235,16 @@ void Game::MouseButtonPressed(sf::Event event)
             dragged = passport; 
         }
     }
+
+    if (event.mouseButton.button == sf::Mouse::Right) 
+    {
+
+
+
+
+
+    }
+
 }
 
 
@@ -271,6 +288,10 @@ void Game::newAnimal()
     passport->setScale(0.6, 0.6);
     passport->setPosition(window.getSize().x / 2,  window.getSize().y / 3);
 
+    accept_button->setTexture(accepted, true);
+    accept_button->setScale(1.8, 1.8);
+    accept_button->setPosition(window.getSize().x / 12, window.getSize().y / 12);
+
 }
 
 void Game::loadTextures() 
@@ -310,6 +331,16 @@ if (!passports[2].loadFromFile("../Data/CritterCustoms/elephant passport.png"))
 {
     std::cout << "elephant passport texture did not load \n";
 }
+
+// accept button sprite
+if (!accepted.loadFromFile("../Data/CritterCustoms/accept button.png"))
+{
+    std::cout << "accept button texture did not load \n";
+}
+
+// reject button sprite
+
+
 
 }
 
