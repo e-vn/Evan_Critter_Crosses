@@ -49,11 +49,19 @@ int main()
       {
           game.keyReleased(event);
       }
+
+      // mouse input
+
+      if (event.type == sf::Event::MouseButtonPressed) 
+      {
+          game.MouseButtonPressed(event);
+      }
+      if (event.type == sf::Event::MouseButtonReleased) 
+      {
+          game.MouseButtonReleased(event);
+      }
     }
     
-
-
-
     //'update' element of the game loop
     game.update(dt);
 

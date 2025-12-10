@@ -16,6 +16,8 @@ class Game
  void mouseClicked(sf::Event event);
  void keyPressed(sf::Event event);
  void keyReleased(sf::Event event);
+ void MouseButtonPressed(sf::Event event);
+ void MouseButtonReleased(sf::Event event);
  void pauseGame();
  void newAnimal();
  void reset();

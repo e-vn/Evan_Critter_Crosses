@@ -99,7 +99,8 @@ void Game::update(float dt)
     }
     else if (game_state == "in_game") 
     {
-        //in game state
+        //in game
+        dragSprite(dragged);
     }
 }
 
@@ -214,6 +215,30 @@ void Game::keyReleased(sf::Event event) {
 
 }
 
+void Game::MouseButtonPressed(sf::Event event)
+{
+   
+    if (event.mouseButton.button == sf::Mouse::Left)
+    {
+        sf::Vector2i click = sf::Mouse::getPosition(window);
+        sf::Vector2f clickf = static_cast<sf::Vector2f>(click);
+
+        if (passport->getGlobalBounds().contains(clickf))
+        {
+            dragged = passport; 
+        }
+    }
+}
+
+
+void Game::MouseButtonReleased(sf::Event event)
+{
+   
+    dragged = nullptr;
+
+}
+
+
 void Game::pauseGame()
 {
     is_paused = true;
@@ -292,11 +317,11 @@ void Game::dragSprite(sf::Sprite* sprite)
 {
     if (sprite != nullptr)
     {
-
+  
     sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
     sf::Vector2f mouse_positionf = static_cast<sf::Vector2f>(mouse_position);
 
-    sf::Vector2f drag_position;
+    sf::Vector2f drag_position = mouse_positionf;
     sprite->setPosition(drag_position.x, drag_position.y);
 
      }
