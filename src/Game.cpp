@@ -286,17 +286,26 @@ if (!passports[2].loadFromFile("../Data/CritterCustoms/elephant passport.png"))
     std::cout << "elephant passport texture did not load \n";
 }
 
+}
 
+void Game::dragSprite(sf::Sprite* sprite)
+{
+    if (sprite != nullptr)
+    {
 
+    sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
+    sf::Vector2f mouse_positionf = static_cast<sf::Vector2f>(mouse_position);
 
+    sf::Vector2f drag_position;
+    sprite->setPosition(drag_position.x, drag_position.y);
 
-
-
-
-
-
+     }
 
 }
+
+
+
+
 
 
 
