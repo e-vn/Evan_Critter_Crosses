@@ -25,9 +25,6 @@ bool Game::init()
     accept_button = new sf::Sprite();
     reject_button = new sf::Sprite();
 
-    accepted = new sf::Texture();
-    rejected = new sf::Texture();
-
     loadTextures();
  
 
@@ -129,6 +126,8 @@ void Game::render()
     {
         window.draw(*passport);
         window.draw(*character);
+        window.draw(*accept_button);
+        window.draw(*reject_button);
 
     }
 }
@@ -240,19 +239,13 @@ void Game::MouseButtonPressed(sf::Event event)
     {
 
 
-
-
-
     }
-
 }
 
 
 void Game::MouseButtonReleased(sf::Event event)
 {
-   
     dragged = nullptr;
-
 }
 
 
@@ -288,9 +281,13 @@ void Game::newAnimal()
     passport->setScale(0.6, 0.6);
     passport->setPosition(window.getSize().x / 2,  window.getSize().y / 3);
 
-    accept_button->setTexture(accepted, true);
-    accept_button->setScale(1.8, 1.8);
-    accept_button->setPosition(window.getSize().x / 12, window.getSize().y / 12);
+    accept_button->setTexture(button_textures[0], true);
+    accept_button->setScale(1.2, 1.2);
+    accept_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
+
+    reject_button->setTexture(button_textures[1], true);
+    reject_button->setScale(1.2, 1.2);
+    reject_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
 
 }
 
@@ -333,14 +330,17 @@ if (!passports[2].loadFromFile("../Data/CritterCustoms/elephant passport.png"))
 }
 
 // accept button sprite
-if (!accepted.loadFromFile("../Data/CritterCustoms/accept button.png"))
+if (!button_textures[0].loadFromFile("../Data/CritterCustoms/accept button.png"))
 {
     std::cout << "accept button texture did not load \n";
 }
 
 // reject button sprite
 
-
+if (!button_textures[1].loadFromFile("../Data/CritterCustoms/accept button.png"))
+{
+    std::cout << "reject button texture did not load \n";
+}
 
 }
 

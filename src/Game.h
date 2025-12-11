@@ -50,10 +50,9 @@ class Game
  sf::Texture* animals = new sf::Texture[3];
  sf::Texture* passports = new sf::Texture[3];
 
+ sf::Texture* button_textures = new sf::Texture[2];
  sf::Sprite* accept_button;
  sf::Sprite* reject_button;
- sf::Texture* accepted;
- sf::Texture* rejected;
 
  sf::Sprite* dragged = nullptr;
 
