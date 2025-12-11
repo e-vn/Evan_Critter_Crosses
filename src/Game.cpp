@@ -25,6 +25,9 @@ bool Game::init()
     accept_button = new sf::Sprite();
     reject_button = new sf::Sprite();
 
+    accepted_stamp = new sf::Sprite();
+    rejected_stamp = new sf::Sprite();
+
     loadTextures();
  
 
@@ -128,6 +131,8 @@ void Game::render()
         window.draw(*character);
         window.draw(*accept_button);
         window.draw(*reject_button);
+        window.draw(*accepted_stamp);
+        window.draw(*rejected_stamp);
 
     }
 }
@@ -136,7 +141,6 @@ void Game::mouseClicked(sf::Event event)
 {
   //get the click position
   sf::Vector2i click = sf::Mouse::getPosition(window);
-
 
 }
 
@@ -216,7 +220,6 @@ void Game::keyPressed(sf::Event event)
     }
 }
 
-
 void Game::keyReleased(sf::Event event) {
 
 }
@@ -233,21 +236,30 @@ void Game::MouseButtonPressed(sf::Event event)
         {
             dragged = passport; 
         }
+
+        if (accept_button->getGlobalBounds().contains(clickf))
+        {
+            bool passport_accepted = true; 
+        }
+
+        if (reject_button->getGlobalBounds().contains(clickf))
+        {
+            bool passport_rejected = true;
+
+        }
+
     }
 
     if (event.mouseButton.button == sf::Mouse::Right) 
     {
-        //right click to bring up accepted + rejected button, when right click change set position of the buttons? 
 
         sf::Vector2i click = sf::Mouse::getPosition(window);
         sf::Vector2f clickf = static_cast<sf::Vector2f>(click);
 
+        //get mouse position then set button sprites around position
         if (passport->getGlobalBounds().contains(clickf))
         {
-            //show buttons in correct position-
-            
-            //find mouse position shift to right of first button, second button add height and gap to y value
-
+        
             accept_button->setPosition(clickf.x + 20, clickf.y + 20);
             reject_button->setPosition(clickf.x + 20, clickf.y + 130);
            
@@ -258,16 +270,13 @@ void Game::MouseButtonPressed(sf::Event event)
             reject_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
         }
 
-        //when button clicked, corresponding boolean set to true?
     }
 }
-
 
 void Game::MouseButtonReleased(sf::Event event)
 {
     dragged = nullptr;
 }
-
 
 void Game::pauseGame()
 {
@@ -292,15 +301,17 @@ void Game::newAnimal()
         should_accept = false;
     }
 
+    // animals
     character->setTexture(animals[animal_index], true);
     character->setScale(1.8, 1.8);
     character->setPosition(window.getSize().x / 12, window.getSize().y / 12);
 
-
+    // passports
     passport->setTexture(passports[passport_index], true);
     passport->setScale(0.6, 0.6);
     passport->setPosition(window.getSize().x / 2,  window.getSize().y / 3);
 
+    // buttons
     accept_button->setTexture(button_textures[0], true);
     accept_button->setScale(1, 1);
     accept_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
@@ -309,6 +320,14 @@ void Game::newAnimal()
     reject_button->setScale(1, 1);
     reject_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
 
+    // stamps
+    accepted_stamp->setTexture(stamp_textures[0], true);
+    accepted_stamp->setScale(1, 1);
+    accepted_stamp->setPosition(window.getSize().x / 12, window.getSize().y / 12);
+
+    rejected_stamp->setTexture(stamp_textures[1], true);
+    rejected_stamp->setScale(1, 1);
+    rejected_stamp->setPosition(window.getSize().x / 1, window.getSize().y / 1);
 }
 
 void Game::loadTextures() 
@@ -362,6 +381,18 @@ if (!button_textures[1].loadFromFile("../Data/CritterCustoms/reject button.png")
     std::cout << "reject button texture did not load \n";
 }
 
+// accept stamp sprite
+if (!stamp_textures[0].loadFromFile("../Data/CritterCustoms/accept.png"))
+{
+    std::cout << "accept stamp texture did not load \n";
+}
+
+// reject stamp sprite
+
+if (!stamp_textures[1].loadFromFile("../Data/CritterCustoms/reject.png"))
+{
+    std::cout << "reject stamp texture did not load \n";
+}
 }
 
 void Game::dragSprite(sf::Sprite* sprite)
@@ -376,6 +407,15 @@ void Game::dragSprite(sf::Sprite* sprite)
     sprite->setPosition(drag_position.x, drag_position.y);
 
      }
+
+    if (passport_accepted = true) 
+    {
+        
+    }
+
+
+
+
 
 }
 

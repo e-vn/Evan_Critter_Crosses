@@ -54,6 +54,10 @@ class Game
  sf::Sprite* accept_button;
  sf::Sprite* reject_button;
 
+ sf::Sprite* accepted_stamp;
+ sf::Sprite* rejected_stamp;
+ sf::Texture* stamp_textures = new sf::Texture[2];
+
  sf::Sprite* dragged = nullptr;
 
  // passport
