@@ -237,8 +237,28 @@ void Game::MouseButtonPressed(sf::Event event)
 
     if (event.mouseButton.button == sf::Mouse::Right) 
     {
+        //right click to bring up accepted + rejected button, when right click change set position of the buttons? 
 
+        sf::Vector2i click = sf::Mouse::getPosition(window);
+        sf::Vector2f clickf = static_cast<sf::Vector2f>(click);
 
+        if (passport->getGlobalBounds().contains(clickf))
+        {
+            //show buttons in correct position-
+            
+            //find mouse position shift to right of first button, second button add height and gap to y value
+
+            accept_button->setPosition(clickf.x + 20, clickf.y + 20);
+            reject_button->setPosition(clickf.x + 20, clickf.y + 130);
+           
+        }
+        else
+        {
+            accept_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
+            reject_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
+        }
+
+        //when button clicked, corresponding boolean set to true?
     }
 }
 
@@ -282,11 +302,11 @@ void Game::newAnimal()
     passport->setPosition(window.getSize().x / 2,  window.getSize().y / 3);
 
     accept_button->setTexture(button_textures[0], true);
-    accept_button->setScale(1.2, 1.2);
+    accept_button->setScale(1, 1);
     accept_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
 
     reject_button->setTexture(button_textures[1], true);
-    reject_button->setScale(1.2, 1.2);
+    reject_button->setScale(1, 1);
     reject_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
 
 }
@@ -337,7 +357,7 @@ if (!button_textures[0].loadFromFile("../Data/CritterCustoms/accept button.png")
 
 // reject button sprite
 
-if (!button_textures[1].loadFromFile("../Data/CritterCustoms/accept button.png"))
+if (!button_textures[1].loadFromFile("../Data/CritterCustoms/reject button.png"))
 {
     std::cout << "reject button texture did not load \n";
 }
