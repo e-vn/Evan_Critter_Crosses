@@ -3,221 +3,222 @@
 #include <iostream>
 
 Game::Game(sf::RenderWindow& game_window)
-  : window(game_window)
+	: window(game_window)
 {
-  srand(time(NULL));
+	srand(time(NULL));
 }
 
 Game::~Game()
 {
-    delete[] animals;
-    delete[] passports;
-    delete character;
-    delete passport;
+	delete[] animals;
+	delete[] passports;
+	delete character;
+	delete passport;
 }
 
 bool Game::init()
 {
-    // sprites
-    character = new sf::Sprite();
-    passport = new sf::Sprite();
+	// sprites
+	character = new sf::Sprite();
+	passport = new sf::Sprite();
 
-    accept_button = new sf::Sprite();
-    reject_button = new sf::Sprite();
+	accept_button = new sf::Sprite();
+	reject_button = new sf::Sprite();
 
-    accepted_stamp = new sf::Sprite();
-    rejected_stamp = new sf::Sprite();
+	accepted_stamp = new sf::Sprite();
+	rejected_stamp = new sf::Sprite();
 
-    loadTextures();
- 
-
-    //main menu title
-    if (!font.loadFromFile("../Data/Fonts/OpenSans-Bold.ttf"))
-    {
-        std::cout << "font did not load \n";
-    }
-    title_text.setString("Critter  Crosses");
-    title_text.setFont(font);
-    title_text.setCharacterSize(90);
-    title_text.setFillColor(sf::Color(255, 255, 255, 255));
-    title_text.setPosition(
-    window.getSize().x / 2 - title_text.getGlobalBounds().width / 2,
-    window.getSize().y / 2 - title_text.getGlobalBounds().height / 2 - 150);
-
-    // play button
-    play_option.setString("> Play <");
-    play_option.setFont(font);
-    play_option.setCharacterSize(50);
-    play_option.setFillColor(sf::Color(255, 255, 255, 128));
-    play_option.setPosition(
-    window.getSize().x / 2 - play_option.getGlobalBounds().width / 2 - 200,
-    window.getSize().y / 2 - play_option.getGlobalBounds().height / 2 + 200);
-
-    // quit button
-    quit_option.setString("Quit");
-    quit_option.setFont(font);
-    quit_option.setCharacterSize(50);
-    quit_option.setFillColor(sf::Color(255, 255, 255, 128));
-    quit_option.setPosition(
-    window.getSize().x / 2 - quit_option.getGlobalBounds().width / 2 + 200,
-    window.getSize().y / 2 - quit_option.getGlobalBounds().height / 2 + 200);
-
-   //pause menu
-   
-  //pause title
-    pause_title.setString("Pause");
-    pause_title.setFont(font);
-    pause_title.setCharacterSize(100);
-    pause_title.setFillColor(sf::Color(255, 255, 255, 255));
-    pause_title.setPosition(
-    window.getSize().x / 2 - pause_title.getGlobalBounds().width / 2,
-    window.getSize().y / 2 - pause_title.getGlobalBounds().height / 2 - 150);
-    // play button
-    continue_option.setString("> Continue <");
-    continue_option.setFont(font);
-    continue_option.setCharacterSize(50);
-    continue_option.setFillColor(sf::Color(255, 255, 255, 128));
-    continue_option.setPosition(
-    window.getSize().x / 2 - continue_option.getGlobalBounds().width / 2 - 200,
-    window.getSize().y / 2 - continue_option.getGlobalBounds().height / 2 + 200);
-
-    // quit button
-    pause_quit_option.setString("Quit");
-    pause_quit_option.setFont(font);
-    pause_quit_option.setCharacterSize(50);
-    pause_quit_option.setFillColor(sf::Color(255, 255, 255, 128));
-    pause_quit_option.setPosition(
-    window.getSize().x / 2 - pause_quit_option.getGlobalBounds().width / 2 + 200,
-    window.getSize().y / 2 - pause_quit_option.getGlobalBounds().height / 2 + 200);
+	loadTextures();
 
 
-  return true;
+	//main menu title
+	if (!font.loadFromFile("../Data/Fonts/OpenSans-Bold.ttf"))
+	{
+		std::cout << "font did not load \n";
+	}
+	title_text.setString("Critter  Crosses");
+	title_text.setFont(font);
+	title_text.setCharacterSize(90);
+	title_text.setFillColor(sf::Color(255, 255, 255, 255));
+	title_text.setPosition(
+		window.getSize().x / 2 - title_text.getGlobalBounds().width / 2,
+		window.getSize().y / 2 - title_text.getGlobalBounds().height / 2 - 150);
+
+	// play button
+	play_option.setString("> Play <");
+	play_option.setFont(font);
+	play_option.setCharacterSize(50);
+	play_option.setFillColor(sf::Color(255, 255, 255, 128));
+	play_option.setPosition(
+		window.getSize().x / 2 - play_option.getGlobalBounds().width / 2 - 200,
+		window.getSize().y / 2 - play_option.getGlobalBounds().height / 2 + 200);
+
+	// quit button
+	quit_option.setString("Quit");
+	quit_option.setFont(font);
+	quit_option.setCharacterSize(50);
+	quit_option.setFillColor(sf::Color(255, 255, 255, 128));
+	quit_option.setPosition(
+		window.getSize().x / 2 - quit_option.getGlobalBounds().width / 2 + 200,
+		window.getSize().y / 2 - quit_option.getGlobalBounds().height / 2 + 200);
+
+	//pause menu
+
+   //pause title
+	pause_title.setString("Pause");
+	pause_title.setFont(font);
+	pause_title.setCharacterSize(100);
+	pause_title.setFillColor(sf::Color(255, 255, 255, 255));
+	pause_title.setPosition(
+		window.getSize().x / 2 - pause_title.getGlobalBounds().width / 2,
+		window.getSize().y / 2 - pause_title.getGlobalBounds().height / 2 - 150);
+	// play button
+	continue_option.setString("> Continue <");
+	continue_option.setFont(font);
+	continue_option.setCharacterSize(50);
+	continue_option.setFillColor(sf::Color(255, 255, 255, 128));
+	continue_option.setPosition(
+		window.getSize().x / 2 - continue_option.getGlobalBounds().width / 2 - 200,
+		window.getSize().y / 2 - continue_option.getGlobalBounds().height / 2 + 200);
+
+	// quit button
+	pause_quit_option.setString("Quit");
+	pause_quit_option.setFont(font);
+	pause_quit_option.setCharacterSize(50);
+	pause_quit_option.setFillColor(sf::Color(255, 255, 255, 128));
+	pause_quit_option.setPosition(
+		window.getSize().x / 2 - pause_quit_option.getGlobalBounds().width / 2 + 200,
+		window.getSize().y / 2 - pause_quit_option.getGlobalBounds().height / 2 + 200);
+
+
+	return true;
 }
 
 void Game::update(float dt)
 {
-    if (game_state == "main")
-    {
-        // main menu state
-    }
-    else if (game_state == "pause")
-    {
-        //pause state
-    }
-    else if (game_state == "in_game") 
-    {
-        //in game
-        dragSprite(dragged);
-    }
+	if (game_state == "main")
+	{
+		// main menu state
+	}
+	else if (game_state == "pause")
+	{
+		//pause state
+	}
+	else if (game_state == "in_game")
+	{
+		//in game
+		dragSprite(dragged);
+	}
 }
 
 void Game::render()
 {
-    if (game_state == "main")
-    {
-        window.draw(title_text);
-        window.draw(play_option);
-        window.draw(quit_option);
-    }
-    else if (game_state == "pause")
-    {
-        window.draw(pause_title);
-        window.draw(continue_option);
-        window.draw(pause_quit_option);
-    }
-    else if (game_state == "in_game") 
-    {
-        window.draw(*passport);
-        window.draw(*character);
-        window.draw(*accept_button);
-        window.draw(*reject_button);
-        window.draw(*accepted_stamp);
-        window.draw(*rejected_stamp);
+	if (game_state == "main")
+	{
+		window.draw(title_text);
+		window.draw(play_option);
+		window.draw(quit_option);
+	}
+	else if (game_state == "pause")
+	{
+		window.draw(pause_title);
+		window.draw(continue_option);
+		window.draw(pause_quit_option);
+	}
+	else if (game_state == "in_game")
+	{
+		window.draw(*passport);
+		window.draw(*character);
+		window.draw(*accept_button);
+		window.draw(*reject_button);
+		window.draw(*accepted_stamp);
+		window.draw(*rejected_stamp);
 
-    }
+
+	}
 }
- 
+
 void Game::mouseClicked(sf::Event event)
 {
-  //get the click position
-  sf::Vector2i click = sf::Mouse::getPosition(window);
+	//get the click position
+	sf::Vector2i click = sf::Mouse::getPosition(window);
 
 }
 
 void Game::keyPressed(sf::Event event)
 {
-    if (game_state == "main")
-    {
-        if (
-            (event.key.code == sf::Keyboard::Left) ||
-            (event.key.code == sf::Keyboard::Right))
-        {
-            play_selected = !play_selected;
-            if (play_selected)
-            {
-                play_option.setString("> Play <");
-                quit_option.setString("Quit");
-            }
-            else
-            {
-                play_option.setString("Play");
-                quit_option.setString("> Quit <");
-            }
-        }
-        else if (event.key.code == sf::Keyboard::Enter)
-        {
-            if (play_selected)
-            {
-                newAnimal();
+	if (game_state == "main")
+	{
+		if (
+			(event.key.code == sf::Keyboard::Left) ||
+			(event.key.code == sf::Keyboard::Right))
+		{
+			play_selected = !play_selected;
+			if (play_selected)
+			{
+				play_option.setString("> Play <");
+				quit_option.setString("Quit");
+			}
+			else
+			{
+				play_option.setString("Play");
+				quit_option.setString("> Quit <");
+			}
+		}
+		else if (event.key.code == sf::Keyboard::Enter)
+		{
+			if (play_selected)
+			{
+				newAnimal();
 
 
-                game_state = "in_game";
-            }
-           else
-            {
-                window.close();
-            }
-        }
-    }
-    else if (game_state == "in_game")
-    {
-        if (event.key.code == sf::Keyboard::Escape)
-        {
-            pauseGame();
-        }
-    }
-    else if (game_state == "pause")
-    {
-        if (
-            (event.key.code == sf::Keyboard::Left) ||
-            (event.key.code == sf::Keyboard::Right))
-        {
-            continue_selected = !continue_selected;
-            if (continue_selected)
-            {
-                continue_option.setString("> Continue <");
-                pause_quit_option.setString("Quit");
-            }
-            else
-            {
-                continue_option.setString("Continue");
-                pause_quit_option.setString("> Quit <");
-            }
-        }
-        else if (event.key.code == sf::Keyboard::Enter)
-        {
-            if (continue_selected)
-            {
-                game_state = "in_game";
-                is_paused = false;
-            }
-            else
-            {
-                game_state = "main";
-                //reset();
-            }
-        }
-    }
+				game_state = "in_game";
+			}
+			else
+			{
+				window.close();
+			}
+		}
+	}
+	else if (game_state == "in_game")
+	{
+		if (event.key.code == sf::Keyboard::Escape)
+		{
+			pauseGame();
+		}
+	}
+	else if (game_state == "pause")
+	{
+		if (
+			(event.key.code == sf::Keyboard::Left) ||
+			(event.key.code == sf::Keyboard::Right))
+		{
+			continue_selected = !continue_selected;
+			if (continue_selected)
+			{
+				continue_option.setString("> Continue <");
+				pause_quit_option.setString("Quit");
+			}
+			else
+			{
+				continue_option.setString("Continue");
+				pause_quit_option.setString("> Quit <");
+			}
+		}
+		else if (event.key.code == sf::Keyboard::Enter)
+		{
+			if (continue_selected)
+			{
+				game_state = "in_game";
+				is_paused = false;
+			}
+			else
+			{
+				game_state = "main";
+				//reset();
+			}
+		}
+	}
 }
 
 void Game::keyReleased(sf::Event event) {
@@ -226,197 +227,213 @@ void Game::keyReleased(sf::Event event) {
 
 void Game::MouseButtonPressed(sf::Event event)
 {
-   
-    if (event.mouseButton.button == sf::Mouse::Left)
-    {
-        sf::Vector2i click = sf::Mouse::getPosition(window);
-        sf::Vector2f clickf = static_cast<sf::Vector2f>(click);
 
-        if (passport->getGlobalBounds().contains(clickf))
-        {
-            dragged = passport; 
-        }
+	if (event.mouseButton.button == sf::Mouse::Left)
+	{
+		sf::Vector2i click = sf::Mouse::getPosition(window);
+		sf::Vector2f clickf = static_cast<sf::Vector2f>(click);
 
-        if (accept_button->getGlobalBounds().contains(clickf))
-        {
-            bool passport_accepted = true; 
-        }
+		if (passport->getGlobalBounds().contains(clickf))
+		{
+			dragged = passport;
+		}
 
-        if (reject_button->getGlobalBounds().contains(clickf))
-        {
-            bool passport_rejected = true;
+		if (accept_button->getGlobalBounds().contains(clickf))
+		{
+			//add offset to setpos both
+			passport_accepted = true;
+			accepted_stamp->setPosition(clickf.x, clickf.y);
+		}
 
-        }
+		if (reject_button->getGlobalBounds().contains(clickf))
+		{
+			passport_rejected = true;
+			rejected_stamp->setPosition(clickf.x, clickf.y);
 
-    }
+		}
 
-    if (event.mouseButton.button == sf::Mouse::Right) 
-    {
+	}
 
-        sf::Vector2i click = sf::Mouse::getPosition(window);
-        sf::Vector2f clickf = static_cast<sf::Vector2f>(click);
+	if (event.mouseButton.button == sf::Mouse::Right)
+	{
 
-        //get mouse position then set button sprites around position
-        if (passport->getGlobalBounds().contains(clickf))
-        {
-        
-            accept_button->setPosition(clickf.x + 20, clickf.y + 20);
-            reject_button->setPosition(clickf.x + 20, clickf.y + 130);
-           
-        }
-        else
-        {
-            accept_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
-            reject_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
-        }
+		sf::Vector2i click = sf::Mouse::getPosition(window);
+		sf::Vector2f clickf = static_cast<sf::Vector2f>(click);
 
-    }
+		//get mouse position then set button sprites around position
+		if (passport->getGlobalBounds().contains(clickf))
+		{
+
+			accept_button->setPosition(clickf.x + 20, clickf.y + 20);
+			reject_button->setPosition(clickf.x + 20, clickf.y + 130);
+
+		}
+		else
+		{
+			accept_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
+			reject_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
+		}
+
+	}
 }
 
 void Game::MouseButtonReleased(sf::Event event)
 {
-    dragged = nullptr;
+	dragged = nullptr;
 }
 
 void Game::pauseGame()
 {
-    is_paused = true;
-    game_state = "pause";
+	is_paused = true;
+	game_state = "pause";
 }
 
 void Game::newAnimal()
 {
-    passport_accepted = false;
-    passport_rejected = false;
+	passport_accepted = false;
+	passport_rejected = false;
 
-    int animal_index = rand() % 3;
-    int passport_index = rand() % 3;
+	int animal_index = rand() % 3;
+	int passport_index = rand() % 3;
 
-    if (animal_index == passport_index)
-    {
-        should_accept = true;
-    }
-    else
-    {
-        should_accept = false;
-    }
+	if (animal_index == passport_index)
+	{
+		should_accept = true;
+	}
+	else
+	{
+		should_accept = false;
+	}
 
-    // animals
-    character->setTexture(animals[animal_index], true);
-    character->setScale(1.8, 1.8);
-    character->setPosition(window.getSize().x / 12, window.getSize().y / 12);
+	// animals
+	character->setTexture(animals[animal_index], true);
+	character->setScale(1.8, 1.8);
+	character->setPosition(window.getSize().x / 12, window.getSize().y / 12);
 
-    // passports
-    passport->setTexture(passports[passport_index], true);
-    passport->setScale(0.6, 0.6);
-    passport->setPosition(window.getSize().x / 2,  window.getSize().y / 3);
+	// passports
+	passport->setTexture(passports[passport_index], true);
+	passport->setScale(0.6, 0.6);
+	passport->setPosition(window.getSize().x / 2, window.getSize().y / 3);
 
-    // buttons
-    accept_button->setTexture(button_textures[0], true);
-    accept_button->setScale(1, 1);
-    accept_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
+	// buttons
+	accept_button->setTexture(button_textures[0], true);
+	accept_button->setScale(1, 1);
+	accept_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
 
-    reject_button->setTexture(button_textures[1], true);
-    reject_button->setScale(1, 1);
-    reject_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
+	reject_button->setTexture(button_textures[1], true);
+	reject_button->setScale(1, 1);
+	reject_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
 
-    // stamps
-    accepted_stamp->setTexture(stamp_textures[0], true);
-    accepted_stamp->setScale(1, 1);
-    accepted_stamp->setPosition(window.getSize().x / 12, window.getSize().y / 12);
+	// stamps
+	accepted_stamp->setTexture(stamp_textures[0], true);
+	accepted_stamp->setScale(1, 1);
+	accepted_stamp->setPosition(window.getSize().x / 1, window.getSize().y / 1);
 
-    rejected_stamp->setTexture(stamp_textures[1], true);
-    rejected_stamp->setScale(1, 1);
-    rejected_stamp->setPosition(window.getSize().x / 1, window.getSize().y / 1);
+	rejected_stamp->setTexture(stamp_textures[1], true);
+	rejected_stamp->setScale(1, 1);
+	rejected_stamp->setPosition(window.getSize().x / 1, window.getSize().y / 1);
 }
 
-void Game::loadTextures() 
+void Game::loadTextures()
 {
-   
-//penguin
-if (!animals[0].loadFromFile("../Data/CritterCustoms/penguin.png"))
-{
-    std::cout << "penguin texture did not load \n";
-}
 
-if (!passports[0].loadFromFile("../Data/CritterCustoms/penguin passport.png"))
-{
-    std::cout << "penguin passport texture did not load \n";
-}
+	//penguin
+	if (!animals[0].loadFromFile("../Data/CritterCustoms/penguin.png"))
+	{
+		std::cout << "penguin texture did not load \n";
+	}
 
-
-//moose
-if (!animals[1].loadFromFile("../Data/CritterCustoms/moose.png"))
-{
-    std::cout << "moose texture did not load \n";
-}
-
-if (!passports[1].loadFromFile("../Data/CritterCustoms/moose passport.png"))
-{
-    std::cout << "moose passport texture did not load \n";
-}
+	if (!passports[0].loadFromFile("../Data/CritterCustoms/penguin passport.png"))
+	{
+		std::cout << "penguin passport texture did not load \n";
+	}
 
 
-//elephant
-if (!animals[2].loadFromFile("../Data/CritterCustoms/elephant.png"))
-{
-    std::cout << "elephant texture did not load \n";
-}
+	//moose
+	if (!animals[1].loadFromFile("../Data/CritterCustoms/moose.png"))
+	{
+		std::cout << "moose texture did not load \n";
+	}
 
-if (!passports[2].loadFromFile("../Data/CritterCustoms/elephant passport.png"))
-{
-    std::cout << "elephant passport texture did not load \n";
-}
+	if (!passports[1].loadFromFile("../Data/CritterCustoms/moose passport.png"))
+	{
+		std::cout << "moose passport texture did not load \n";
+	}
 
-// accept button sprite
-if (!button_textures[0].loadFromFile("../Data/CritterCustoms/accept button.png"))
-{
-    std::cout << "accept button texture did not load \n";
-}
 
-// reject button sprite
+	//elephant
+	if (!animals[2].loadFromFile("../Data/CritterCustoms/elephant.png"))
+	{
+		std::cout << "elephant texture did not load \n";
+	}
 
-if (!button_textures[1].loadFromFile("../Data/CritterCustoms/reject button.png"))
-{
-    std::cout << "reject button texture did not load \n";
-}
+	if (!passports[2].loadFromFile("../Data/CritterCustoms/elephant passport.png"))
+	{
+		std::cout << "elephant passport texture did not load \n";
+	}
 
-// accept stamp sprite
-if (!stamp_textures[0].loadFromFile("../Data/CritterCustoms/accept.png"))
-{
-    std::cout << "accept stamp texture did not load \n";
-}
+	// accept button sprite
+	if (!button_textures[0].loadFromFile("../Data/CritterCustoms/accept button.png"))
+	{
+		std::cout << "accept button texture did not load \n";
+	}
 
-// reject stamp sprite
+	// reject button sprite
 
-if (!stamp_textures[1].loadFromFile("../Data/CritterCustoms/reject.png"))
-{
-    std::cout << "reject stamp texture did not load \n";
-}
+	if (!button_textures[1].loadFromFile("../Data/CritterCustoms/reject button.png"))
+	{
+		std::cout << "reject button texture did not load \n";
+	}
+
+	// accept stamp sprite
+	if (!stamp_textures[0].loadFromFile("../Data/CritterCustoms/accept.png"))
+	{
+		std::cout << "accept stamp texture did not load \n";
+	}
+
+	// reject stamp sprite
+
+	if (!stamp_textures[1].loadFromFile("../Data/CritterCustoms/reject.png"))
+	{
+		std::cout << "reject stamp texture did not load \n";
+	}
 }
 
 void Game::dragSprite(sf::Sprite* sprite)
 {
-    if (sprite != nullptr)
-    {
-  
-    sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
-    sf::Vector2f mouse_positionf = static_cast<sf::Vector2f>(mouse_position);
+	sf::Vector2f drag_position;
+	if (sprite != nullptr)
+	{
 
-    sf::Vector2f drag_position = mouse_positionf;
-    sprite->setPosition(drag_position.x, drag_position.y);
+		sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
+		sf::Vector2f mouse_positionf = static_cast<sf::Vector2f>(mouse_position);
 
-     }
+		drag_position = mouse_positionf;
+		sprite->setPosition(drag_position.x, drag_position.y);
 
-    if (passport_accepted = true) 
-    {
-        
-    }
+	}
 
+	if (passport_accepted == true)
+	{
 
+		accepted_stamp->setPosition(drag_position.x, drag_position.y);
 
+	}
+	else
+	{
+		accepted_stamp->setPosition(window.getSize().x / 1, window.getSize().y / 1);
+	}
 
+	if (passport_rejected == true)
+	{
 
+		rejected_stamp->setPosition(drag_position.x, drag_position.y);
+
+	}
+	else
+	{
+		rejected_stamp->setPosition(window.getSize().x / 1, window.getSize().y / 1);
+	}
 }
 
 

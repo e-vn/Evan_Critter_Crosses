@@ -61,8 +61,8 @@ class Game
  sf::Sprite* dragged = nullptr;
 
  // passport
- bool passport_accepted;
- bool passport_rejected;
+ bool passport_accepted = false;
+ bool passport_rejected = false;
  bool should_accept;
 
 };
