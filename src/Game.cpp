@@ -90,6 +90,10 @@ bool Game::init()
 		window.getSize().x / 2 - pause_quit_option.getGlobalBounds().width / 2 + 200,
 		window.getSize().y / 2 - pause_quit_option.getGlobalBounds().height / 2 + 200);
 
+	// background
+	background_texture.loadFromFile("../Data/WhackaMole Worksheet/background.png");
+	background_sprite.setTexture(background_texture);
+
 
 	return true;
 }
@@ -127,6 +131,7 @@ void Game::render()
 	}
 	else if (game_state == "in_game")
 	{
+		window.draw(background_sprite);
 		window.draw(*passport);
 		window.draw(*character);
 		window.draw(*accept_button);

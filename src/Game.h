@@ -46,6 +46,10 @@ class Game
  sf::Text pause_quit_option;
  bool continue_selected = true;
 
+ // background
+ sf::Texture background_texture;
+ sf::Sprite background_sprite;
+
  // sprites
  sf::Sprite* character;
  sf::Sprite* passport;
