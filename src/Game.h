@@ -36,6 +36,8 @@ class Game
  bool play_selected = true;
  bool is_paused = false;
 
+ sf::Vector2f drag_position;
+
  // text
  sf::Font font;
  sf::Text title_text;

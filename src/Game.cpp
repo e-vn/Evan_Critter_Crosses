@@ -240,7 +240,7 @@ void Game::MouseButtonPressed(sf::Event event)
 
 		if (accept_button->getGlobalBounds().contains(clickf))
 		{
-			//add offset to setpos both
+		
 			passport_accepted = true;
 			accepted_stamp->setPosition(clickf.x, clickf.y);
 		}
@@ -401,7 +401,8 @@ void Game::loadTextures()
 
 void Game::dragSprite(sf::Sprite* sprite)
 {
-	sf::Vector2f drag_position;
+	//sf::Vector2f drag_position;
+
 	if (sprite != nullptr)
 	{
 
@@ -417,6 +418,7 @@ void Game::dragSprite(sf::Sprite* sprite)
 	{
 
 		accepted_stamp->setPosition(drag_position.x, drag_position.y);
+		
 
 	}
 	else
