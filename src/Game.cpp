@@ -62,8 +62,7 @@ bool Game::init()
 		window.getSize().x / 2 - quit_option.getGlobalBounds().width / 2 + 200,
 		window.getSize().y / 2 - quit_option.getGlobalBounds().height / 2 + 200);
 
-
-	//pause menu
+//pause menu
 
    //pause title
 	pause_title.setString("Pause");
@@ -73,6 +72,7 @@ bool Game::init()
 	pause_title.setPosition(
 		window.getSize().x / 2 - pause_title.getGlobalBounds().width / 2,
 		window.getSize().y / 2 - pause_title.getGlobalBounds().height / 2 - 150);
+
 	// play button
 	continue_option.setString("> Continue <");
 	continue_option.setFont(font);
@@ -114,7 +114,7 @@ bool Game::init()
 		window.getSize().y / 2 - displayPoints.getGlobalBounds().height / 2 + 300);
 
 	//win
-	win_text.setString("You Win! /n Play Again?");
+	win_text.setString("       You Win!");
 	win_text.setFont(font);
 	win_text.setCharacterSize(90);
 	win_text.setFillColor(sf::Color(255, 255, 255, 255));
@@ -122,7 +122,14 @@ bool Game::init()
 		window.getSize().x / 2 - title_text.getGlobalBounds().width / 2,
 		window.getSize().y / 2 - title_text.getGlobalBounds().height / 2 - 150);
 
-
+	//lose
+	lose_text.setString("       You Lose!");
+	lose_text.setFont(font);
+	lose_text.setCharacterSize(90);
+	lose_text.setFillColor(sf::Color(255, 255, 255, 255));
+	lose_text.setPosition(
+		window.getSize().x / 2 - title_text.getGlobalBounds().width / 2,
+		window.getSize().y / 2 - title_text.getGlobalBounds().height / 2 - 150);
 
 	return true;
 }
@@ -141,22 +148,27 @@ void Game::update(float dt)
 	{
 		//in game
 		dragSprite(dragged);
+		displayPoints.setString("Score: " + std::to_string(player_points));
+		displayLives.setString("Lives: " + std::to_string(player_lifes));
 
 	}
-	else if (game_state == "win_game") {
-
+	else if (game_state == "win_game") 
+	{
+		//win state
 	}
-	else if (game_state == "lose_game") {
-
+	else if (game_state == "lose_game") 
+	{
+		//lose state
 	}
 
+	///
 
 	if (player_lifes == 0)
 	{
 		game_state = "lose_game";
 	}
 
-	if (player_points == 5)
+	if (player_points == 3)
 	{
 		game_state = "win_game";
 	}
@@ -178,9 +190,7 @@ void Game::render()
 	}
 	else if (game_state == "in_game")
 	{
-		//life_text.setString(std::to_string(player_lifes));
-		//point_text.setString(std::to_string(player_points));
-
+	
 		window.draw(background_sprite);
 		window.draw(displayPoints);
 		window.draw(displayLives);
@@ -195,14 +205,14 @@ void Game::render()
 	else if (game_state == "win_game")
 	{
 		window.draw(win_text);
-		window.draw(play_option);
-		window.draw(quit_option);
+		//window.draw(play_option);
+		//window.draw(quit_option);
 	}
 	else if (game_state == "lose_game")
 	{
 		window.draw(lose_text);
-		window.draw(play_option);
-		window.draw(quit_option);
+		//window.draw(play_option);
+		//window.draw(quit_option);
 	}
 }
 
@@ -232,15 +242,14 @@ void Game::keyPressed(sf::Event event)
 				play_option.setString("Play");
 				quit_option.setString("> Quit <");
 			}
+
 		}
 		else if (event.key.code == sf::Keyboard::Enter)
 		{
 			if (play_selected)
 			{
 				player_points = 0;
-				player_lifes = 3;
-				displayPoints.setString("Score: " + std::to_string(player_points));
-				displayLives.setString("Lives: " + std::to_string(player_lifes));				
+				player_lifes = 3;				
 				newAnimal();
 
 				game_state = "in_game";
@@ -287,14 +296,13 @@ void Game::keyPressed(sf::Event event)
 			else
 			{
 				game_state = "main";
-				//reset();
 			}
 		}
 	}
-
 }
 
-void Game::keyReleased(sf::Event event) {
+void Game::keyReleased(sf::Event event)
+{
 
 }
 
@@ -312,21 +320,19 @@ void Game::MouseButtonPressed(sf::Event event)
 			passport_accepted = true;
 			passport_rejected = false;
 			accepted_stamp->setPosition(clickf.x, clickf.y);
-			//player_points++;
+	
 		}
 		else if (reject_button->getGlobalBounds().contains(clickf))
 		{
 			passport_rejected = true;
 			passport_accepted = false;
 			rejected_stamp->setPosition(clickf.x, clickf.y);
-			//player_points++;
 
 		}
 		else if (passport->getGlobalBounds().contains(clickf))
 		{
 			dragged = passport;
 		}
-
 	}
 
 	if (event.mouseButton.button == sf::Mouse::Right)
@@ -376,7 +382,6 @@ void Game::MouseButtonReleased(sf::Event event)
 			std::cout << "add score (reject)" << std::endl;
 			player_points += 1;
 			//TODO - update point string
-
 		}
 		else
 		{
@@ -509,7 +514,6 @@ void Game::loadTextures()
 void Game::dragSprite(sf::Sprite* sprite)
 {
 
-
 	if (sprite != nullptr)
 	{
 
@@ -526,10 +530,7 @@ void Game::dragSprite(sf::Sprite* sprite)
 
 	if (passport_accepted == true)
 	{
-
 		accepted_stamp->setPosition(drag_position.x, drag_position.y);
-
-
 	}
 	else
 	{
@@ -538,9 +539,7 @@ void Game::dragSprite(sf::Sprite* sprite)
 
 	if (passport_rejected == true)
 	{
-
 		rejected_stamp->setPosition(drag_position.x, drag_position.y);
-
 	}
 	else
 	{

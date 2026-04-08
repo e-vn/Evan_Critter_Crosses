@@ -35,6 +35,8 @@ class Game
  sf::Text quit_option;
  bool play_selected = true;
  bool is_paused = false;
+ bool lose = false;
+ bool win = true;
   
 
  sf::Vector2f drag_position;
@@ -93,8 +95,7 @@ class Game
  int player_points = 0;
  int max_points = 3;
 
- bool lose = false;
- bool win = true;
+
 
 };
 
