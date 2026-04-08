@@ -65,6 +65,9 @@ class Game
  sf::Texture* stamp_textures = new sf::Texture[2];
 
  sf::Sprite* dragged = nullptr;
+ sf::Sprite Stamp;
+
+ sf::Vector2f drag_offset;
 
  // passport
  bool passport_accepted = false;

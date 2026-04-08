@@ -132,13 +132,12 @@ void Game::render()
 	else if (game_state == "in_game")
 	{
 		window.draw(background_sprite);
-		window.draw(*passport);
 		window.draw(*character);
-		window.draw(*accept_button);
-		window.draw(*reject_button);
+		window.draw(*passport);
 		window.draw(*accepted_stamp);
 		window.draw(*rejected_stamp);
-
+		window.draw(*accept_button);
+		window.draw(*reject_button);
 
 	}
 }
@@ -278,12 +277,44 @@ void Game::MouseButtonPressed(sf::Event event)
 			accept_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
 			reject_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
 		}
-
+		if (dragged != nullptr)
+		{
+			drag_offset =
+				sf::Vector2f(static_cast<float>(clickf.x), static_cast<float>(clickf.y)) - dragged->getPosition();
+			dragSprite(dragged);
+		}
 	}
+	
 }
 
 void Game::MouseButtonReleased(sf::Event event)
 {
+
+	if (dragged == passport) 
+	{
+
+		if (passport_accepted)
+		{
+			//score +1
+			std::cout << "add score (accpet)" << std::endl;
+		
+		}
+		else if (should_accept == false && rejected_stamp) 
+		{
+
+			//score +1
+			std::cout << "add score (reject)" << std::endl;
+
+		}
+		else 
+		{
+			std::cout << "minus life" << std::endl;
+		}
+		newAnimal();
+	
+
+
+	}
 	dragged = nullptr;
 }
 
@@ -406,7 +437,7 @@ void Game::loadTextures()
 
 void Game::dragSprite(sf::Sprite* sprite)
 {
-	//sf::Vector2f drag_position;
+	
 
 	if (sprite != nullptr)
 	{
@@ -414,7 +445,10 @@ void Game::dragSprite(sf::Sprite* sprite)
 		sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
 		sf::Vector2f mouse_positionf = static_cast<sf::Vector2f>(mouse_position);
 
-		drag_position = mouse_positionf;
+		//sf::Vector2f drag_position = mouse_positionf - drag_offset;
+		//sprite->setPosition(drag_position.x, drag_position.y);
+
+		drag_position = mouse_positionf - drag_offset;
 		sprite->setPosition(drag_position.x, drag_position.y);
 
 	}
