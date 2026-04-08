@@ -36,7 +36,7 @@ bool Game::init()
 	{
 		std::cout << "font did not load \n";
 	}
-	title_text.setString("Critter  Crosses");
+	title_text.setString("Critter  Crossing");
 	title_text.setFont(font);
 	title_text.setCharacterSize(90);
 	title_text.setFillColor(sf::Color(255, 255, 255, 255));
@@ -96,22 +96,22 @@ bool Game::init()
 	background_sprite.setTexture(background_texture);
 
 	// life text
-	life_text.setString("Lifes not changed");
-	life_text.setFont(font);
-	life_text.setCharacterSize(35);
-	life_text.setFillColor(sf::Color(255, 255, 255, 255));
-	life_text.setPosition(
-		window.getSize().x / 2 - life_text.getGlobalBounds().width / 2 - 300,
-		window.getSize().y / 2 - life_text.getGlobalBounds().height / 2 + 300);
+	displayLives.setString("Lives not changed");
+	displayLives.setFont(font);
+	displayLives.setCharacterSize(35);
+	displayLives.setFillColor(sf::Color(255, 255, 255, 255));
+	displayLives.setPosition(
+		window.getSize().x / 2 - displayLives.getGlobalBounds().width / 2 - 300,
+		window.getSize().y / 2 - displayLives.getGlobalBounds().height / 2 + 300);
 
 	// point text
-	point_text.setString("Points not changed");
-	point_text.setFont(font);
-	point_text.setCharacterSize(35);
-	point_text.setFillColor(sf::Color(255, 255, 255, 255));
-	point_text.setPosition(
-		window.getSize().x / 2 - point_text.getGlobalBounds().width / 2 + 300,
-		window.getSize().y / 2 - point_text.getGlobalBounds().height / 2 + 300);
+	displayPoints.setString("Points not changed");
+	displayPoints.setFont(font);
+	displayPoints.setCharacterSize(35);
+	displayPoints.setFillColor(sf::Color(255, 255, 255, 255));
+	displayPoints.setPosition(
+		window.getSize().x / 2 - displayPoints.getGlobalBounds().width / 2 + 300,
+		window.getSize().y / 2 - displayPoints.getGlobalBounds().height / 2 + 300);
 
 	//win
 	win_text.setString("You Win! /n Play Again?");
@@ -141,17 +141,24 @@ void Game::update(float dt)
 	{
 		//in game
 		dragSprite(dragged);
-		pointCollection();
-		
+
 	}
-	else if (player_lifes == 0) 
-	{
-		game_state = lose;
+	else if (game_state == "win_game") {
+
+	}
+	else if (game_state == "lose_game") {
+
 	}
 
-	else if (player_points == 3) 
+
+	if (player_lifes == 0)
 	{
-		game_state = win;
+		game_state = "lose_game";
+	}
+
+	if (player_points == 5)
+	{
+		game_state = "win_game";
 	}
 }
 
@@ -171,23 +178,29 @@ void Game::render()
 	}
 	else if (game_state == "in_game")
 	{
-		life_text.setString(std::to_string(player_lifes));
-		point_text.setString(std::to_string(player_points));
+		//life_text.setString(std::to_string(player_lifes));
+		//point_text.setString(std::to_string(player_points));
 
 		window.draw(background_sprite);
-		window.draw(point_text);
-		window.draw(life_text);
+		window.draw(displayPoints);
+		window.draw(displayLives);
 		window.draw(*character);
 		window.draw(*passport);
 		window.draw(*accepted_stamp);
 		window.draw(*rejected_stamp);
 		window.draw(*accept_button);
 		window.draw(*reject_button);
-		
+
 	}
-	if (game_state == "win_game") 
+	else if (game_state == "win_game")
 	{
 		window.draw(win_text);
+		window.draw(play_option);
+		window.draw(quit_option);
+	}
+	else if (game_state == "lose_game")
+	{
+		window.draw(lose_text);
 		window.draw(play_option);
 		window.draw(quit_option);
 	}
@@ -224,12 +237,11 @@ void Game::keyPressed(sf::Event event)
 		{
 			if (play_selected)
 			{
-				displayPoints.setString("Score: " + std::to_string(player_points));
-				displayLifes.setString("Lifes: " + std::to_string(player_lifes));
 				player_points = 0;
 				player_lifes = 3;
+				displayPoints.setString("Score: " + std::to_string(player_points));
+				displayLives.setString("Lives: " + std::to_string(player_lifes));				
 				newAnimal();
-
 
 				game_state = "in_game";
 			}
@@ -292,31 +304,27 @@ void Game::MouseButtonPressed(sf::Event event)
 	if (event.mouseButton.button == sf::Mouse::Left)
 	{
 		sf::Vector2i click = sf::Mouse::getPosition(window);
-		sf::Vector2f clickf = static_cast<sf::Vector2f>(click);
-
-		if (passport->getGlobalBounds().contains(clickf))
-		{
-			dragged = passport;
-		}
+		sf::Vector2f clickf = static_cast<sf::Vector2f>(click);		
 
 		if (accept_button->getGlobalBounds().contains(clickf))
 		{
-		
-			passport_accepted = true;
-			accepted_stamp->setPosition(clickf.x, clickf.y);
-			player_points++;
-		}
 
-		if (reject_button->getGlobalBounds().contains(clickf))
+			passport_accepted = true;
+			passport_rejected = false;
+			accepted_stamp->setPosition(clickf.x, clickf.y);
+			//player_points++;
+		}
+		else if (reject_button->getGlobalBounds().contains(clickf))
 		{
 			passport_rejected = true;
+			passport_accepted = false;
 			rejected_stamp->setPosition(clickf.x, clickf.y);
-			player_points++;
+			//player_points++;
 
 		}
-		else 
+		else if (passport->getGlobalBounds().contains(clickf))
 		{
-			player_lifes--;
+			dragged = passport;
 		}
 
 	}
@@ -330,16 +338,16 @@ void Game::MouseButtonPressed(sf::Event event)
 		//get mouse position then set button sprites around position
 		if (passport->getGlobalBounds().contains(clickf))
 		{
-
 			accept_button->setPosition(clickf.x + 20, clickf.y + 20);
 			reject_button->setPosition(clickf.x + 20, clickf.y + 130);
-
 		}
 		else
 		{
 			accept_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
 			reject_button->setPosition(window.getSize().x / 1, window.getSize().y / 1);
 		}
+
+		//TODO - Is this being hit???
 		if (dragged != nullptr)
 		{
 			drag_offset =
@@ -347,38 +355,36 @@ void Game::MouseButtonPressed(sf::Event event)
 			dragSprite(dragged);
 		}
 	}
-	
+
 }
 
 void Game::MouseButtonReleased(sf::Event event)
 {
-
-	if (dragged == passport) 
+	if (character->getGlobalBounds().intersects(passport->getGlobalBounds()))
 	{
-
-		if (passport_accepted)
+		if (passport_accepted && should_accept)
 		{
 			//score +1
-			std::cout << "add score (accpet)" << std::endl;
+			std::cout << "add score (accept)" << std::endl;
 			player_points += 1;
+			//TODO - update point string
 		}
-		else if (should_accept == false && rejected_stamp) 
+		else if (!should_accept && passport_rejected)
 		{
 
 			//score +1
 			std::cout << "add score (reject)" << std::endl;
 			player_points += 1;
+			//TODO - update point string
 
 		}
-		else 
+		else
 		{
 			std::cout << "minus life" << std::endl;
 			player_lifes -= 1;
+			//TODO - update displayLives
 		}
 		newAnimal();
-	
-
-
 	}
 	dragged = nullptr;
 }
@@ -413,7 +419,7 @@ void Game::newAnimal()
 
 	// passports
 	passport->setTexture(passports[passport_index], true);
-	passport->setScale(0.6, 0.6);
+	passport->setScale(0.5, 0.5);
 	passport->setPosition(window.getSize().x / 2, window.getSize().y / 3);
 
 	// buttons
@@ -502,7 +508,7 @@ void Game::loadTextures()
 
 void Game::dragSprite(sf::Sprite* sprite)
 {
-	
+
 
 	if (sprite != nullptr)
 	{
@@ -522,7 +528,7 @@ void Game::dragSprite(sf::Sprite* sprite)
 	{
 
 		accepted_stamp->setPosition(drag_position.x, drag_position.y);
-		
+
 
 	}
 	else
@@ -539,16 +545,6 @@ void Game::dragSprite(sf::Sprite* sprite)
 	else
 	{
 		rejected_stamp->setPosition(window.getSize().x / 1, window.getSize().y / 1);
-	}
-}
-
-void Game::pointCollection() 
-{
-	if (player_points == 3 == true)
-	{
-		win = true; 
-		game_state = win;
-		std::cout << "Player won!" << std::endl;
 	}
 }
 

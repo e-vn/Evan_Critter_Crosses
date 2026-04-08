@@ -23,7 +23,6 @@ class Game
  void reset();
  void loadTextures();
  void dragSprite(sf::Sprite* sprite);
- void pointCollection();
 
 
  private:
@@ -46,9 +45,10 @@ class Game
  sf::Text pause_title;
  sf::Text continue_option;
  sf::Text pause_quit_option;
- sf::Text life_text;
- sf::Text point_text;
+ sf::Text displayPoints;
+ sf::Text displayLives;
  sf::Text win_text;
+ sf::Text lose_text;
  bool continue_selected = true;
 
  // background
@@ -74,8 +74,7 @@ class Game
 
  sf::Vector2f drag_offset;
 
- sf::Text displayPoints;
- sf::Text displayLifes;
+
 
  // passport
  bool passport_accepted = false;
