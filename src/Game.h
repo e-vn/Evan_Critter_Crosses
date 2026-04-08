@@ -23,6 +23,7 @@ class Game
  void reset();
  void loadTextures();
  void dragSprite(sf::Sprite* sprite);
+ void pointCollection();
 
 
  private:
@@ -35,6 +36,7 @@ class Game
  sf::Text quit_option;
  bool play_selected = true;
  bool is_paused = false;
+  
 
  sf::Vector2f drag_position;
 
@@ -44,6 +46,9 @@ class Game
  sf::Text pause_title;
  sf::Text continue_option;
  sf::Text pause_quit_option;
+ sf::Text life_text;
+ sf::Text point_text;
+ sf::Text win_text;
  bool continue_selected = true;
 
  // background
@@ -65,14 +70,32 @@ class Game
  sf::Texture* stamp_textures = new sf::Texture[2];
 
  sf::Sprite* dragged = nullptr;
- sf::Sprite Stamp;
+ sf::Sprite Stamp;          
 
  sf::Vector2f drag_offset;
+
+ sf::Text displayPoints;
+ sf::Text displayLifes;
 
  // passport
  bool passport_accepted = false;
  bool passport_rejected = false;
  bool should_accept;
+
+
+ // lives
+
+ int player_lifes = 3;
+ int max_lifes = 3;
+
+
+ // points
+
+ int player_points = 0;
+ int max_points = 3;
+
+ bool lose = false;
+ bool win = true;
 
 };
 
